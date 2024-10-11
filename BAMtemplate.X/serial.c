@@ -28,7 +28,7 @@ void serial_send(unsigned char c){
 }
 
 
-unsigned char serial_recieve(void){
+unsigned char serial_receive(void){
     /* Wait for data to be received */
     while ( !(UCSR0A & (1<<RXC0)) )
         ;
@@ -37,7 +37,7 @@ unsigned char serial_recieve(void){
 }
 
 
-unsigned char serial_try_recieve(unsigned char *success){
+unsigned char serial_try_receive(unsigned char *success){
     if(UCSR0A & (1<<RXC0)){
         *success = 1;
         return UDR0;
