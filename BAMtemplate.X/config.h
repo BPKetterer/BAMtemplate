@@ -8,6 +8,7 @@
 #ifndef CONFIG_H
 #define	CONFIG_H
 
+#define ATMEGA_168PA 1
 
 #define M_HZ 1000000UL
 #define F_CPU (1 * M_HZ)
@@ -16,8 +17,7 @@
 
 #define ERROR_CHECK 1
 
-#define ATMEGA_168PA 1
-
+#define PRINT_CONFIG 1
 
 #endif	/* CONFIG_H */
 

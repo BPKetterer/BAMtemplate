@@ -9,6 +9,7 @@
 #define	PRINT_H
 
 #include "serial.h"
+#include "config.h"
 
 void print_str(char *str);
 
@@ -27,6 +28,8 @@ void print_bin_byte(unsigned char b);
 void print_bool(unsigned char b);
 
 void print_nl(void);
+
+void print_config(void);
 
 #endif	/* PRINT_H */
 

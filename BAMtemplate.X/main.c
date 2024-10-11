@@ -53,6 +53,7 @@ int main(void){
     sei();
     
     print_str("initialisation done\n");
+    print_config();
 
     while(1){
         pause_s(1);
