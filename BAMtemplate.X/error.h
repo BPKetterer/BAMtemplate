@@ -55,7 +55,7 @@ void error_set_handler(void (*function)(error_code));
 #if ERROR_CHECK
 #define ERROR_ASSERT(condition, error_code) ((condition) ? ((void)0) : error_handle(error_code))
 #else
-#define ERROR_ASSERT(condition, error_code, msg) ((void)0)
+#define ERROR_ASSERT(condition, error_code) ((void)0)
 #endif
 
 #endif	/* ERROR_H */
