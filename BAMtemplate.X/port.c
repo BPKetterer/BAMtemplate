@@ -6,7 +6,7 @@ unsigned char port_is_valid(port port){
     return port >= PORT_FIRST && port <= PORT_LAST;
 }
 
-#if ATMEGA_168PA
+#if MCU_TYPE == ATMEGA_168PA
 
 port_ptr port_ptr_set_write(port port){
     ERROR_ASSERT(port >= PORT_FIRST && port <= PORT_LAST, ERROR_CODE_PORT_ILLEGAL_PORT);
@@ -51,5 +51,5 @@ port_ptr port_ptr_read(port port){
 }
 
 #else
-    #error "no known hardware in port.c"
+    #error "mcu type not implemented for port.c"
 #endif

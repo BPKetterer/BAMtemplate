@@ -12,7 +12,7 @@ void external_interrupt_disable(port port, unsigned char pin){
 }
 
 
-#if ATMEGA_168PA
+#if MCU_TYPE == ATMEGA_168PA
 
 void (*interrupt_b)(void) = 0;
 void (*interrupt_c)(void) = 0;
@@ -94,5 +94,5 @@ void external_interrupt_set_function(port port, void (*function)(void)){
 }
 
 #else
-    #error "no known hardware in serial.c"
+    #error "mcu type not implemented for external_interrupt.c"
 #endif

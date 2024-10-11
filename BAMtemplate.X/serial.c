@@ -1,7 +1,7 @@
 #include "serial.h"
 
 
-#if ATMEGA_168PA
+#if MCU_TYPE == ATMEGA_168PA
 
 #ifndef F_CPU
 #error "F_CPU not defined/known in serial.c"
@@ -48,6 +48,6 @@ unsigned char serial_try_receive(unsigned char *success){
 }
 
 #else
-    #error "no known hardware in serial.c"
+    #error "mcu type not implemented for serial.c"
 #endif
 

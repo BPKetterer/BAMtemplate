@@ -11,16 +11,14 @@
 #define ENABLED 1
 #define DISABLED 0
 #define M_HZ 1000000UL
-
-
-
 #define ATMEGA_168PA 1
-#define F_CPU (1 * M_HZ)
-#define ERROR_CHECK ENABLED
-#define PRINT_CONFIG ENABLED
-#define MIN_PAUSE_US 0
 
 
+#define MCU_TYPE        ATMEGA_168PA
+#define F_CPU           (1 * M_HZ)
+#define ERROR_CHECK     ENABLED
+#define PRINT_CONFIG    ENABLED
+#define MIN_PAUSE_US    0
 
 #endif	/* CONFIG_H */
 

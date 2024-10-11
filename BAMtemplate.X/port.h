@@ -11,9 +11,9 @@
 #include "config.h"
 #include <avr/io.h>
 #include "print.h"
-/*error.h" included in the body to avoid circular dependency*/
+/*error.h included in the body to avoid circular dependency*/
 
-#if ATMEGA_168PA
+#if MCU_TYPE == ATMEGA_168PA
 typedef enum{
     PORT_B = 0,
     PORT_C,
@@ -22,7 +22,7 @@ typedef enum{
     PORT_LAST = PORT_D
 } port;
 #else
-    #error "no known hardware in port.h"
+    #error "mcu type not implemented for port.h"
 #endif
 
 typedef volatile unsigned char * port_ptr;

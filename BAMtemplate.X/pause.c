@@ -2,7 +2,7 @@
 
 
 
-#if ATMEGA_168PA
+#if MCU_TYPE == ATMEGA_168PA
 
 #define MAX_DELAY_MS (262 * 1000000 / F_CPU)
 #define MAX_DELAY_US (768 * 1000000 / F_CPU)
@@ -33,5 +33,5 @@ void pause_ns(float ns){
 
 
 #else
-    #error "no known hardware in port.c"
+    #error "mcu type not implemented for pause.c"
 #endif
