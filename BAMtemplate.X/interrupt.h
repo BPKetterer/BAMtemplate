@@ -9,18 +9,11 @@
 #define	INTERRUPT_H
 
 #include <avr/interrupt.h>
+#include "config.h"
 
-typedef void ** InterruptData;
+void interrupt_global_enable(void);
 
-void interrupt_enable(void);
-
-void interrupt_disable(void);
-
-#define INTERRUPT_DATA_CREATE(name, size) void* name[size]
-
-#define INTERRUPT_DATA_SET(interrupt_data, idx, value) (interrupt_data)[idx] = (void*) &(value)
-
-#define INTERRUPT_DATA_GET(interrupt_data, idx, type) (*(type*)(interrupt_data)[idx])
+void interrupt_global_disable(void);
 
 #endif	/* INTERRUPT_H */
 

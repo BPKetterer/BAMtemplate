@@ -19,8 +19,8 @@
 #include "object_manager.h"
 
 
-void external_interrupt_c(InterruptData interrupt_data){
-    queue_append(INTERRUPT_DATA_GET(interrupt_data, 0, Queue), PORT_READ(PORT_C));
+void external_interrupt_c(void * interrupt_data){
+    queue_append((Queue) interrupt_data, PORT_READ(PORT_C));
 }
 
 
@@ -40,11 +40,9 @@ int main(void){
     port_ptr led_write_ptr = port_ptr_write(PORT_D);
     (void) led_write_ptr;
     
-    INTERRUPT_DATA_CREATE(interrupt_data_c, 1);
-    INTERRUPT_DATA_SET(interrupt_data_c, 0, re_queue);
-    external_interrupt_set_function(PORT_C, &external_interrupt_c, interrupt_data_c);
+    external_interrupt_set_function(PORT_C, &external_interrupt_c, (void *) re_queue);
     external_interrupt_enable_masked(PORT_C, 0x03);
-    interrupt_enable();
+    interrupt_global_enable();
     
     print_str("initialisation done\n");
     print_config();

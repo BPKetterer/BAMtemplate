@@ -14,13 +14,13 @@ void external_interrupt_disable(port port, unsigned char pin){
 
 #if MCU_TYPE == ATMEGA_168PA
 
-void (*interrupt_b)(InterruptData) = 0;
-void (*interrupt_c)(InterruptData) = 0;
-void (*interrupt_d)(InterruptData) = 0;
+void (*interrupt_b)(void *) = 0;
+void (*interrupt_c)(void *) = 0;
+void (*interrupt_d)(void *) = 0;
 
-InterruptData interrupt_b_data = 0;
-InterruptData interrupt_c_data = 0;
-InterruptData interrupt_d_data = 0;
+void * interrupt_b_data = 0;
+void * interrupt_c_data = 0;
+void * interrupt_d_data = 0;
 
 ISR(PCINT0_vect){
     interrupt_b(interrupt_b_data);
@@ -81,7 +81,7 @@ void external_interrupt_disable_masked(port port, unsigned char mask){
     }
 }
 
-void external_interrupt_set_function(port port, void (*function)(InterruptData), InterruptData interrupt_data){
+void external_interrupt_set_function(port port, void (*function)(void *), void * interrupt_data){
     ERROR_ASSERT(port_is_valid(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
     switch(port){
         case PORT_B:

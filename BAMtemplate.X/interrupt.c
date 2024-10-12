@@ -1,10 +1,15 @@
 #include "interrupt.h"
 
-void interrupt_enable(void){
+
+#if MCU_TYPE == ATMEGA_168PA
+void interrupt_global_enable(void){
     sei();
 }
 
-void interrupt_disable(void){
+void interrupt_global_disable(void){
     cli();
 }
+#else
+    #error "mcu type not implemented for interrupt.c"
+#endif
 
