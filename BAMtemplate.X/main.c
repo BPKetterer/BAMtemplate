@@ -16,6 +16,7 @@
 #include "rotary_encoder.h"
 #include "pause.h"
 #include "interrupt.h"
+#include "object_manager.h"
 
 
 void external_interrupt_c(InterruptData interrupt_data){
@@ -56,12 +57,15 @@ int main(void){
     
     print_str("initialisation done\n");
     print_config();
+    
+    object_manager_print_info();
+    print_long((unsigned int)object_manager_allocate(5));
+    object_manager_print_info();
+    print_long((unsigned int)object_manager_allocate(2));
+    object_manager_print_info();
 
     while(1){
         rotary_encoder_update_with_queue(rotary_encoder, re_queue, 1);
-        
-        print_long(rotary_encoder_get_counter(rotary_encoder));
-        print_nl();
     }
     return 0;
 }

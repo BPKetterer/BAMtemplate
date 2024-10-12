@@ -97,6 +97,8 @@ void print_config(void){
     #else
     print_str("The system is NOT checking for errors\n");
     #endif
+    print_long(OBJECT_MANAGER_SIZE);
+    print_str(" byte reserved for the object_manager\n");
     #if MIN_PAUSE_US
     print_str("pauses shorter than ");
     print_float(MIN_PAUSE_US);

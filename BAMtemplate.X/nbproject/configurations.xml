@@ -16,6 +16,7 @@
         <itemPath>rotary_encoder.h</itemPath>
         <itemPath>pause.h</itemPath>
         <itemPath>interrupt.h</itemPath>
+        <itemPath>object_manager.h</itemPath>
       </logicalFolder>
       <itemPath>config.h</itemPath>
     </logicalFolder>
@@ -42,6 +43,7 @@
         <itemPath>rotary_encoder.c</itemPath>
         <itemPath>pause.c</itemPath>
         <itemPath>interrupt.c</itemPath>
+        <itemPath>object_manager.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
     </logicalFolder>

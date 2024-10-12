@@ -14,11 +14,13 @@
 #define ATMEGA_168PA 1
 
 
-#define MCU_TYPE        ATMEGA_168PA
-#define F_CPU           (1 * M_HZ)
-#define ERROR_CHECK     ENABLED
-#define PRINT_CONFIG    ENABLED
-#define MIN_PAUSE_US    0
+#define MCU_TYPE                ATMEGA_168PA
+#define F_CPU                   (1 * M_HZ)
+#define ERROR_CHECK             ENABLED
+#define OBJECT_MANAGER_SIZE     20
+#define MIN_PAUSE_US            0
+#define OBJECT_MANAGER_PRINT    ENABLED
+#define PRINT_CONFIG            ENABLED
 
 #endif	/* CONFIG_H */
 
