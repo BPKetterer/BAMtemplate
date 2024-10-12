@@ -20,7 +20,7 @@
 
 
 void external_interrupt_c(InterruptData interrupt_data){
-    queue_append(INTERRUPT_DATA_GET(interrupt_data, 0, QueueHandle), PORT_READ(PORT_C));
+    queue_append(INTERRUPT_DATA_GET(interrupt_data, 0, Queue), PORT_READ(PORT_C));
 }
 
 
@@ -32,10 +32,7 @@ int main(void){
     Button left_button = button_create(PORT_B, 1);
     Button right_button = button_create(PORT_B, 2);
     
-    unsigned char re_queue_data[16];
-    QueueStruct re_queue_struct;
-    QueueHandle re_queue = QUEUE_HANDLE(re_queue_struct);
-    queue_init(re_queue, re_queue_data, 16);
+    Queue re_queue = queue_create(30);
     
     RotaryEncoderStruct rotary_encoder_struct;
     RotaryEncoderHandle rotary_encoder = ROTARY_ENCODER_HANDLE(rotary_encoder_struct);
@@ -59,8 +56,8 @@ int main(void){
     while(1){
         button_update(left_button);
         button_update(right_button);
-        /*rotary_encoder_update_with_queue(rotary_encoder, re_queue, 1);*/
-        pause_s(0.5);
+        rotary_encoder_update_with_queue(rotary_encoder, re_queue, 1);
+        
         print_bool(button_is_pressed(left_button));
         print_str(" ");
         print_long(button_duration(left_button));
@@ -68,6 +65,8 @@ int main(void){
         print_bool(button_is_pressed(right_button));
         print_str(" ");
         print_long(button_duration(right_button));
+        print_str("   ");
+        print_long(rotary_encoder_get_counter(rotary_encoder));
         print_nl();
     }
     return 0;

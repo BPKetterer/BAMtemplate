@@ -9,29 +9,28 @@
 #define	QUEUE_H
 
 #include "error.h"
+#include "object_manager.h"
 
-typedef struct{
+struct queue{
     volatile unsigned char * data;
     unsigned char max_length;
     volatile unsigned char used_length;
     volatile unsigned char first;
-} QueueStruct;
+};
 
-typedef QueueStruct* QueueHandle;
+typedef struct queue * Queue;
 
-void queue_init(QueueHandle queue, unsigned char *data_array, unsigned char length);
+Queue queue_create(unsigned char length);
 
-void queue_append(QueueHandle queue, unsigned char data);
+void queue_append(Queue queue, unsigned char data);
 
-unsigned char queue_pop(QueueHandle queue);
+unsigned char queue_pop(Queue queue);
 
-unsigned char queue_get(QueueHandle queue, unsigned char id);
+unsigned char queue_get(Queue queue, unsigned char id);
 
-unsigned char queue_size(QueueHandle queue);
+unsigned char queue_size(Queue queue);
 
-void queue_clear(QueueHandle queue);
-
-#define QUEUE_HANDLE(QueueStruct) (&(QueueStruct))
+void queue_clear(Queue queue);
 
 #endif	/* QUEUE_H */
 

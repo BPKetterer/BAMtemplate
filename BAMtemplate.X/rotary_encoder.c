@@ -27,7 +27,7 @@ void rotary_encoder_update(RotaryEncoderHandle rotary_encoder, unsigned char dat
     }
 }
 
-void rotary_encoder_update_with_queue(RotaryEncoderHandle rotary_encoder, QueueHandle queue, unsigned char remove_used_elements){
+void rotary_encoder_update_with_queue(RotaryEncoderHandle rotary_encoder, Queue queue, unsigned char remove_used_elements){
     ERROR_ASSERT(rotary_encoder, ERROR_CODE_ROTARY_ENCODER_HANDLE_NULL);
     ERROR_ASSERT(queue, ERROR_CODE_ROTARY_ENCODER_QUEUE_HANDLE_NULL);
     if(remove_used_elements){

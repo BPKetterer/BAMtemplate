@@ -25,7 +25,7 @@ void rotary_encoder_init(RotaryEncoderHandle rotary_encoder, unsigned char pin_a
 
 void rotary_encoder_update(RotaryEncoderHandle rotary_encoder, unsigned char data);
 
-void rotary_encoder_update_with_queue(RotaryEncoderHandle rotary_encoder, QueueHandle queue, unsigned char remove_used_elements);
+void rotary_encoder_update_with_queue(RotaryEncoderHandle rotary_encoder, Queue queue, unsigned char remove_used_elements);
 
 signed char rotary_encoder_get_counter(RotaryEncoderHandle rotary_encoder);
 
