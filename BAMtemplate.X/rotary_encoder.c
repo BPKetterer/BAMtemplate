@@ -1,11 +1,11 @@
 #include "rotary_encoder.h"
 
 
-void rotary_encoder_init(RotaryEncoderHandle rotary_encoder, unsigned char pin_a, unsigned char pin_b){
-    ERROR_ASSERT(rotary_encoder, ERROR_CODE_ROTARY_ENCODER_HANDLE_NULL);
+RotaryEncoder rotary_encoder_create(unsigned char pin_a, unsigned char pin_b){
     ERROR_ASSERT(pin_a < 8, ERROR_CODE_ROTARY_ENCODER_ILLEGAL_PIN);
     ERROR_ASSERT(pin_b < 8, ERROR_CODE_ROTARY_ENCODER_ILLEGAL_PIN);
     ERROR_ASSERT(pin_a != pin_b, ERROR_CODE_ROTARY_ENCODER_SAME_PIN);
+    RotaryEncoder rotary_encoder = object_manager_allocate(sizeof(struct rotary_encoder));
     rotary_encoder->status = 0;
     rotary_encoder->transitions[0] = 0;
     rotary_encoder->transitions[1] = 1 << pin_b;
@@ -13,9 +13,10 @@ void rotary_encoder_init(RotaryEncoderHandle rotary_encoder, unsigned char pin_a
     rotary_encoder->transitions[3] = 1 << pin_a;
     rotary_encoder->mask = (1 << pin_a) | (1 << pin_b);
     rotary_encoder->state_counter = 0;
+    return rotary_encoder;
 }
 
-void rotary_encoder_update(RotaryEncoderHandle rotary_encoder, unsigned char data){
+void rotary_encoder_update(RotaryEncoder rotary_encoder, unsigned char data){
     ERROR_ASSERT(rotary_encoder, ERROR_CODE_ROTARY_ENCODER_HANDLE_NULL);
     unsigned char new_status;
     for(new_status = 0; rotary_encoder->transitions[new_status] != (data & rotary_encoder->mask); new_status++)
@@ -27,7 +28,7 @@ void rotary_encoder_update(RotaryEncoderHandle rotary_encoder, unsigned char dat
     }
 }
 
-void rotary_encoder_update_with_queue(RotaryEncoderHandle rotary_encoder, Queue queue, unsigned char remove_used_elements){
+void rotary_encoder_update_with_queue(RotaryEncoder rotary_encoder, Queue queue, unsigned char remove_used_elements){
     ERROR_ASSERT(rotary_encoder, ERROR_CODE_ROTARY_ENCODER_HANDLE_NULL);
     ERROR_ASSERT(queue, ERROR_CODE_ROTARY_ENCODER_QUEUE_HANDLE_NULL);
     if(remove_used_elements){
@@ -42,12 +43,12 @@ void rotary_encoder_update_with_queue(RotaryEncoderHandle rotary_encoder, Queue 
     }
 }
 
-signed char rotary_encoder_get_counter(RotaryEncoderHandle rotary_encoder){
+signed char rotary_encoder_get_counter(RotaryEncoder rotary_encoder){
     ERROR_ASSERT(rotary_encoder, ERROR_CODE_ROTARY_ENCODER_HANDLE_NULL);
     return rotary_encoder->state_counter;
 }
 
-void rotary_encoder_reset_counter(RotaryEncoderHandle rotary_encoder){
+void rotary_encoder_reset_counter(RotaryEncoder rotary_encoder){
     ERROR_ASSERT(rotary_encoder, ERROR_CODE_ROTARY_ENCODER_HANDLE_NULL);
     rotary_encoder->state_counter = 0;
 }

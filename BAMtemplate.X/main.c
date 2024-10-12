@@ -33,10 +33,7 @@ int main(void){
     Button right_button = button_create(PORT_B, 2);
     
     Queue re_queue = queue_create(30);
-    
-    RotaryEncoderStruct rotary_encoder_struct;
-    RotaryEncoderHandle rotary_encoder = ROTARY_ENCODER_HANDLE(rotary_encoder_struct);
-    rotary_encoder_init(rotary_encoder, 0, 1);
+    RotaryEncoder rotary_encoder = rotary_encoder_create(0, 1);
     
     unsigned char led_mask = (1 << 7);
     PORT_SET_WRITE(PORT_D) |= led_mask;

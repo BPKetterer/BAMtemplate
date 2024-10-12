@@ -10,28 +10,27 @@
 
 #include "queue.h"
 #include "error.h"
+#include "object_manager.h"
 
 
-typedef struct{
+struct rotary_encoder{
     unsigned char status;
     unsigned char transitions[4];
     unsigned char mask;
     signed char state_counter;
-} RotaryEncoderStruct;
+};
 
-typedef RotaryEncoderStruct* RotaryEncoderHandle;
+typedef struct rotary_encoder * RotaryEncoder;
 
-void rotary_encoder_init(RotaryEncoderHandle rotary_encoder, unsigned char pin_a, unsigned char pin_b);
+RotaryEncoder rotary_encoder_create(unsigned char pin_a, unsigned char pin_b);
 
-void rotary_encoder_update(RotaryEncoderHandle rotary_encoder, unsigned char data);
+void rotary_encoder_update(RotaryEncoder rotary_encoder, unsigned char data);
 
-void rotary_encoder_update_with_queue(RotaryEncoderHandle rotary_encoder, Queue queue, unsigned char remove_used_elements);
+void rotary_encoder_update_with_queue(RotaryEncoder rotary_encoder, Queue queue, unsigned char remove_used_elements);
 
-signed char rotary_encoder_get_counter(RotaryEncoderHandle rotary_encoder);
+signed char rotary_encoder_get_counter(RotaryEncoder rotary_encoder);
 
-void rotary_encoder_reset_counter(RotaryEncoderHandle rotary_encoder);
-
-#define ROTARY_ENCODER_HANDLE(rotary_encoder_struct) (&(rotary_encoder_struct))
+void rotary_encoder_reset_counter(RotaryEncoder rotary_encoder);
 
 #endif	/* ROTARY_ENCODER_H */
 
