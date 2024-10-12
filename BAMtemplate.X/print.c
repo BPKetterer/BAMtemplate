@@ -82,7 +82,6 @@ void print_hex_half(unsigned char h){
 
 void print_config(void){
     #if PRINT_CONFIG
-    print_str("\n---\n");
     print_str("Selected MCU: ");
     #if MCU_TYPE == ATMEGA_168PA
     print_str("ATMEGA_168PA\n");
@@ -104,10 +103,9 @@ void print_config(void){
     print_float(MIN_PAUSE_US);
     print_str(" us are skipped\n");
     #else
-    print_str("No pauses are skipped");  
+    print_str("No pauses are skipped\n");  
     #endif
-    print_str("\n---\n");
     #else    
-    print_str("\nPRINT_CONFIG not enabled\n");
+    print_str("PRINT_CONFIG not enabled\n");
     #endif
 }

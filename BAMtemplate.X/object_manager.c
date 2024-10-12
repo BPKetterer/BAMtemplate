@@ -21,9 +21,9 @@ unsigned int object_manager_unused_size(void){
 
 void object_manager_print_info(void){
     #if OBJECT_MANAGER_PRINT
-    print_str("\nobject_manager:\nreserved byte: ");
+    print_str("object_manager:\n   reserved byte: ");
     print_long(OBJECT_MANAGER_SIZE);
-    print_str("\nused byte: ");
+    print_str("\n   used byte: ");
     print_long(object_manager_used_size());
     print_nl();
     #endif

@@ -31,7 +31,7 @@ int main(void){
     
     Button left_button = button_create(PORT_B, 1);
     Button right_button = button_create(PORT_B, 2);
-    
+
     Queue re_queue = queue_create(30);
     RotaryEncoder rotary_encoder = rotary_encoder_create(0, 1);
     
