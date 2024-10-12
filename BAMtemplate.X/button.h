@@ -18,22 +18,23 @@
 
 #include "port.h"
 #include "error.h"
+#include "object_manager.h"
 
 /*
  * The struct that saves the internal information for a button.
  */
-typedef struct {
+struct button {
     port_ptr port_ptr_read;
     unsigned char pin;
     signed char status;
-} ButtonStruct;
+};
 
 /*
  * The handle type which is passed to the button functions. Since this is a
  * pointer it can be passed to other functions and still reference the same
  * object.
  */
-typedef ButtonStruct* ButtonHandle;
+typedef struct button * Button;
 
 /*
  * Initialises a button, this function has to be called for each button, before
@@ -42,20 +43,20 @@ typedef ButtonStruct* ButtonHandle;
  * @param   port    The port, where the button is connected to
  * @param   pin     The pin of the button on the specified port
  */
-void button_init(ButtonHandle button, port port, unsigned char pin);
+Button button_create(port port, unsigned char pin);
 
 /*
  * Checks the input and updates the status of the button.
  * @param   button  The button that is updated
  */
-void button_update(ButtonHandle button);
+void button_update(Button button);
 
 /*
  * Returns if a button is currently pressed.
  * @param   button  The button that is checked
  * @return  A non-zero value, when the button is pressed.
  */
-unsigned char button_is_pressed(ButtonHandle button);
+unsigned char button_is_pressed(Button button);
 
 /*
  * Returns how long a button is in the current state.
@@ -63,9 +64,7 @@ unsigned char button_is_pressed(ButtonHandle button);
  * @return  The amount of updates called where the button did not change its
  *          state (caps at 127)
  */
-unsigned char button_duration(ButtonHandle button);
-
-#define BUTTON_HANDLE(button_struct) (&(button_struct))
+unsigned char button_duration(Button button);
 
 #endif	/* BUTTON_H */
 

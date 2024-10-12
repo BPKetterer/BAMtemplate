@@ -29,11 +29,8 @@ int main(void){
     error_handler_configure_led(PORT_B, 0);
     error_set_handler(&error_handler_led_and_serial);
     
-    ButtonStruct left_button_struct, right_button_struct;
-    ButtonHandle left_button = BUTTON_HANDLE(left_button_struct);
-    ButtonHandle right_button = BUTTON_HANDLE(right_button_struct);
-    button_init(left_button, PORT_B, 1);
-    button_init(right_button, PORT_B, 2);
+    Button left_button = button_create(PORT_B, 1);
+    Button right_button = button_create(PORT_B, 2);
     
     unsigned char re_queue_data[16];
     QueueStruct re_queue_struct;
@@ -57,9 +54,21 @@ int main(void){
     
     print_str("initialisation done\n");
     print_config();
+    object_manager_print_info();
 
     while(1){
-        rotary_encoder_update_with_queue(rotary_encoder, re_queue, 1);
+        button_update(left_button);
+        button_update(right_button);
+        /*rotary_encoder_update_with_queue(rotary_encoder, re_queue, 1);*/
+        pause_s(0.5);
+        print_bool(button_is_pressed(left_button));
+        print_str(" ");
+        print_long(button_duration(left_button));
+        print_str("   ");
+        print_bool(button_is_pressed(right_button));
+        print_str(" ");
+        print_long(button_duration(right_button));
+        print_nl();
     }
     return 0;
 }
