@@ -5,11 +5,6 @@
  * Created on October 2, 2024, 10:24 AM
  * 
  * This header allows for easy usage of Buttons.
- * Since dynamic memory management is not ideal for MCUs the user has to
- * create a ButtonStruct first. Then the BUTTON_HANDLE macro can be used to
- * get the associated ButtonHandle. This can be used for "object oriented"
- * programming. Each ButtonHandle has to be properly setup using the button_init
- * function. 
  */
 
 #ifndef BUTTON_H
@@ -37,11 +32,10 @@ struct button {
 typedef struct button * Button;
 
 /*
- * Initialises a button, this function has to be called for each button, before
- * it can be used.
- * @param   button  The button which is initialised
+ * Creates a button.
  * @param   port    The port, where the button is connected to
  * @param   pin     The pin of the button on the specified port
+ * @return  the handle for the button
  */
 Button button_create(port port, unsigned char pin);
 
