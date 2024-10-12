@@ -4,8 +4,8 @@
 
 #if MCU_TYPE == ATMEGA_168PA
 
-#define MAX_DELAY_MS (262 * 1000000 / F_CPU)
-#define MAX_DELAY_US (768 * 1000000 / F_CPU)
+#define MAX_DELAY_MS (262.f * 1000000 / F_CPU)
+#define MAX_DELAY_US (768.f * 1000000 / F_CPU)
 
 void pause_s(float s){
     pause_ms(s * 1000);
@@ -28,7 +28,7 @@ void pause_us(float us){
 }
 
 void pause_ns(float ns){
-    pause_ms(ns / 1000);
+    pause_us(ns / 1000);
 }
 
 
