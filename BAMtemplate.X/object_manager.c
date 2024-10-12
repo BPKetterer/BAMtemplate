@@ -26,5 +26,7 @@ void object_manager_print_info(void){
     print_str("\n   used byte: ");
     print_long(object_manager_used_size());
     print_nl();
+    #else
+    print_str("OBJECT_MANAGER_PRINT not enabled\n");
     #endif
 }
