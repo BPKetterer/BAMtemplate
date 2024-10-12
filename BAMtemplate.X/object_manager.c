@@ -5,6 +5,7 @@ char object_manager_memory[OBJECT_MANAGER_SIZE];
 unsigned int object_manager_used_memory = 0;
 
 void * object_manager_allocate(unsigned int size){
+    ERROR_ASSERT(size + object_manager_used_memory <= OBJECT_MANAGER_SIZE, ERROR_CODE_OBJECT_MANAGER_NOT_ENOUGH_SPACE);
     void * ptr = (object_manager_memory + object_manager_used_memory);
     object_manager_used_memory += size;
     return ptr;

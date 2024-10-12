@@ -10,6 +10,7 @@
 
 #include "config.h"
 #include "print.h"
+#include "error.h"
 
 #ifndef OBJECT_MANAGER_SIZE
 #error "OBJECT_MANAGER_SIZE not defined in config.h"

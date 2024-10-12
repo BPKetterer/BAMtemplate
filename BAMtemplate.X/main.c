@@ -57,12 +57,6 @@ int main(void){
     
     print_str("initialisation done\n");
     print_config();
-    
-    object_manager_print_info();
-    print_long((unsigned int)object_manager_allocate(5));
-    object_manager_print_info();
-    print_long((unsigned int)object_manager_allocate(2));
-    object_manager_print_info();
 
     while(1){
         rotary_encoder_update_with_queue(rotary_encoder, re_queue, 1);
