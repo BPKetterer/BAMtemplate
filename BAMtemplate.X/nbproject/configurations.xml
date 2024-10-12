@@ -15,6 +15,7 @@
         <itemPath>queue.h</itemPath>
         <itemPath>rotary_encoder.h</itemPath>
         <itemPath>pause.h</itemPath>
+        <itemPath>interrupt.h</itemPath>
       </logicalFolder>
       <itemPath>config.h</itemPath>
     </logicalFolder>
@@ -40,6 +41,7 @@
         <itemPath>queue.c</itemPath>
         <itemPath>rotary_encoder.c</itemPath>
         <itemPath>pause.c</itemPath>
+        <itemPath>interrupt.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
     </logicalFolder>

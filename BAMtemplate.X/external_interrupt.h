@@ -13,6 +13,7 @@
 #include "config.h"
 #include "port.h"
 #include "error.h"
+#include "interrupt.h"
 
 void external_interrupt_enable(port port, unsigned char pin);
 
@@ -22,7 +23,7 @@ void external_interrupt_enable_masked(port port, unsigned char mask);
 
 void external_interrupt_disable_masked(port port, unsigned char mask);
 
-void external_interrupt_set_function(port port, void (*function)(void));
+void external_interrupt_set_function(port port, void (*function)(InterruptData), InterruptData interrupt_data);
 
 
 #endif	/* EXTERNAL_INTERRUPT_H */
