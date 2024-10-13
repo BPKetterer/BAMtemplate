@@ -17,6 +17,7 @@
         <itemPath>pause.h</itemPath>
         <itemPath>interrupt.h</itemPath>
         <itemPath>object_manager.h</itemPath>
+        <itemPath>timer_interrupt.h</itemPath>
       </logicalFolder>
       <itemPath>config.h</itemPath>
     </logicalFolder>
@@ -44,6 +45,7 @@
         <itemPath>pause.c</itemPath>
         <itemPath>interrupt.c</itemPath>
         <itemPath>object_manager.c</itemPath>
+        <itemPath>timer_interrupt.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
     </logicalFolder>

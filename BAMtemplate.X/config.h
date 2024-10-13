@@ -19,8 +19,8 @@
 #define ERROR_CHECK             ENABLED
 #define OBJECT_MANAGER_SIZE     50
 #define MIN_PAUSE_US            0
-#define OBJECT_MANAGER_PRINT    ENABLED
-#define PRINT_CONFIG            ENABLED
+#define OBJECT_MANAGER_PRINT    DISABLED
+#define PRINT_CONFIG            DISABLED
 
 #endif	/* CONFIG_H */
 
