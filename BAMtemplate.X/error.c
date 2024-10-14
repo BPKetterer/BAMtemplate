@@ -10,8 +10,8 @@ void error_handler_led_and_serial(error_code error_code);
 
 void (*error_handler)(error_code) = &error_handler_serial;
 
-port_ptr error_led_port_ptr = 0;
-uint8_t error_led_pin;
+port error_led_port = PORT_UNDEFINED;
+uint8_t error_led_pin = 0;
 
 void error_handle(error_code error_code) {
     error_handler(error_code);
@@ -39,10 +39,10 @@ void error_set_custom_handler(void (*function)(error_code)){
 }
 
 void error_handler_configure_led(port port, uint8_t pin) {
-    ERROR_ASSERT(port_is_valid(port), ERROR_CODE_ERROR_ILLEGAL_LED_PORT);
+    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_ERROR_ILLEGAL_LED_PORT);
     ERROR_ASSERT(pin < 8, ERROR_CODE_ERROR_ILLEGAL_LED_PIN);
     PORT_SET_WRITE(port) |= (uint8_t)1 << pin;
-    error_led_port_ptr = port_ptr_write(port);
+    error_led_port = port;
     error_led_pin = pin;
 }
 
@@ -56,11 +56,11 @@ void error_handler_serial(error_code error_code) {
 void error_handler_led(error_code error_code) {
     (void) error_code;
     #if ERROR_CHECK
-    if(!error_led_port_ptr){
+    if(error_led_port != PORT_UNDEFINED){
         error_handler_serial(ERROR_CODE_ERROR_UNDEFINED_LED);
     }
     #endif
-    *error_led_port_ptr |= (uint8_t)1 << error_led_pin;
+    PORT_WRITE(error_led_port) |= (uint8_t)1 << error_led_pin;
 }
 
 void error_handler_led_and_serial(error_code error_code) {

@@ -37,7 +37,7 @@ ISR(PCINT2_vect){
 void external_interrupt_init(void){}
 
 void external_interrupt_enable_masked(port port, uint8_t mask){
-    ERROR_ASSERT(port_is_valid(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
+    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
     switch(port){
         case PORT_B:
             ERROR_ASSERT(external_interrupt_b_function, ERROR_CODE_EXTERNAL_INTERRUPT_FUNCTION_NULL);
@@ -54,12 +54,13 @@ void external_interrupt_enable_masked(port port, uint8_t mask){
             PCICR |= (1 << PCIE2);
             PCMSK2 |= mask;
             break;
-        /*default unreachable*/
+        default:
+            break;
     }
 }
 
 void external_interrupt_disable_masked(port port, uint8_t mask){
-    ERROR_ASSERT(port_is_valid(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
+    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
     switch(port){
         case PORT_B:
             PCMSK0 &= ~mask;
@@ -79,12 +80,13 @@ void external_interrupt_disable_masked(port port, uint8_t mask){
                 PCICR &= ~((uint8_t)1 << PCIE2);
             }
             break;
-        /*default unreachable*/
+        default:
+            break;
     }
 }
 
 void external_interrupt_set_function(port port, void (*function)(void *), void * interrupt_data){
-    ERROR_ASSERT(port_is_valid(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
+    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
     switch(port){
         case PORT_B:
             external_interrupt_b_function = function;
@@ -98,7 +100,8 @@ void external_interrupt_set_function(port port, void (*function)(void *), void *
             external_interrupt_d_function = function;
             external_interrupt_d_data = interrupt_data;
             break;
-        /*default unreachable*/
+        default:
+            break;
     }
 }
 

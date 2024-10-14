@@ -2,19 +2,19 @@
 
 
 Button button_create(port port, uint8_t pin){
-    ERROR_ASSERT(port_is_valid(port), ERROR_CODE_BUTTON_ILLEGAL_PORT);
+    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_BUTTON_ILLEGAL_PORT);
     ERROR_ASSERT(pin < 8, ERROR_CODE_BUTTON_ILLEGAL_PIN);
     PORT_SET_WRITE(port) &= ~((uint8_t)1 << pin);
     Button button = (Button) object_manager_allocate(sizeof(struct button));
     button->pin = pin;
-    button->port_ptr_read = port_ptr_read(port);
-    button->status = (*button->port_ptr_read >> pin & 1) - 1;
+    button->port = port;
+    button->status = (PORT_READ(button->port) >> pin & 1) - 1;
     return button;
 }
 
 void button_update(Button button){
     ERROR_ASSERT(button, ERROR_CODE_BUTTON_HANDLE_NULL);
-    if(*button->port_ptr_read >> button->pin & 1){
+    if(PORT_READ(button->port) >> button->pin & 1){
         if(button->status < 0){
             button->status = 0;
         } else if(button->status < 127){

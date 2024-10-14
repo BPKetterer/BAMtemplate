@@ -165,9 +165,9 @@
         <property key="initialize-data" value="true"/>
         <property key="input-libraries" value="libm"/>
         <property key="keep-generated-startup.as" value="false"/>
-        <property key="link-in-c-BAMtemplate" value="true"/>
-        <property key="link-in-c-BAMtemplate-gcc" value=""/>
-        <property key="link-in-peripheral-BAMtemplate" value="false"/>
+        <property key="link-in-c-library" value="true"/>
+        <property key="link-in-c-library-gcc" value=""/>
+        <property key="link-in-peripheral-library" value="false"/>
         <property key="managed-stack" value="false"/>
         <property key="opt-xc8-linker-file" value="false"/>
         <property key="opt-xc8-linker-link_startup" value="false"/>
@@ -283,8 +283,6 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-1fff"/>
-        <property key="programmerToGoFilePath"
-                  value="C:/Users/Benni/MPLABXProjects/BAMtemplate/BAMtemplate.X/debug/default/BAMtemplate_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmentry.voltage" value="low"/>

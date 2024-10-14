@@ -19,7 +19,7 @@
  * The struct that saves the internal information for a button.
  */
 struct button {
-    port_ptr port_ptr_read;
+    port port;
     uint8_t pin;
     int8_t status;
 };

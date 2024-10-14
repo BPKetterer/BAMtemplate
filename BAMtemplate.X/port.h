@@ -11,38 +11,30 @@
 #include "config.h"
 #include <avr/io.h>
 #include "print.h"
-/*error.h included in the body to avoid circular dependency*/
 
 #if MCU_TYPE == ATMEGA_168PA
 typedef enum{
+    PORT_UNDEFINED = -1,
     PORT_B = 0,
     PORT_C,
     PORT_D,
-    PORT_FIRST = PORT_B,
-    PORT_LAST = PORT_D
+    PORT_COUNT = 3,
 } port;
+extern volatile uint8_t *port_set_write[PORT_COUNT];
+extern volatile uint8_t *port_write[PORT_COUNT];
+extern volatile uint8_t *port_read[PORT_COUNT];
 #else
     #error "mcu type not implemented for port.h"
 #endif
 
-typedef volatile uint8_t * port_ptr;
 
+#define PORT_SET_WRITE(port) (*(port_set_write[port]))
 
-port_ptr port_ptr_set_write(port port);
+#define PORT_WRITE(port) (*(port_write[port]))
 
-port_ptr port_ptr_write(port port);
+#define PORT_READ(port) (*(port_read[port]))
 
-port_ptr port_ptr_read(port port);
-
-uint8_t port_is_valid(port port);
-
-#define PORT_SET_WRITE(port) (*port_ptr_set_write(port))
-
-#define PORT_WRITE(port) (*port_ptr_write(port))
-
-#define PORT_READ(port) (*port_ptr_read(port))
-
-#define PORT_IS_VALID(port) ((port) >= PORT_FIRST && (port) <= PORT_LAST)
+#define PORT_IS_VALID(port) ((port) >= 0 && (port) < PORT_COUNT)
 
 #endif	/* PORT_H */
 
