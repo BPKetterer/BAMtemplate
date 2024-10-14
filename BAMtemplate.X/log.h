@@ -16,6 +16,12 @@
     print_str(var); \
     print_nl()
 
+#define LOG_CHAR(var) \
+    print_str(#var); \
+    print_str(" = "); \
+    print_char(var); \
+    print_nl()
+
 #define LOG_INT64(var) \
     print_str(#var); \
     print_str(" = "); \
@@ -44,6 +50,12 @@
     print_str(#var); \
     print_str(" = 0b"); \
     print_bin_byte(var); \
+    print_nl()
+
+#define LOG_BOOL(var) \
+    print_str(#var); \
+    print_str(" = "); \
+    print_bool(var); \
     print_nl()
 
 #endif	/* LOG_H */
