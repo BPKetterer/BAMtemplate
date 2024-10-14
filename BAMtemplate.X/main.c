@@ -49,7 +49,7 @@ int main(void){
     
     timer_interrupt_init();
     timer_interrupt_set_function(TIMER_1, &timer_interrupt, 0);
-    timer_interrupt_set_period(TIMER_1, 500 * 1000UL);
+    timer_interrupt_set_period(TIMER_1, 10000UL * 1000UL);
     timer_interrupt_enable(TIMER_1);
 
     interrupt_global_enable();

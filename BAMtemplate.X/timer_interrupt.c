@@ -5,12 +5,15 @@ uint8_t calc_prescale(timer timer, uint32_t us, uint32_t max_us_without_prescale
 void (*timer_interrupt_functions[TIMER_COUNT])(void *) = {};
 void * timer_interrupt_data[TIMER_COUNT] = {};
 
+#define TIMER_INTERRUPT_CALL_FUNCTION(timer) (*timer_interrupt_functions[timer])(timer_interrupt_data[timer])
+
+#define TIMER_INTERRUPT_IS_LEGAL(timer) ((timer) >= 0 && (timer) < TIMER_COUNT)
+
 void timer_interrupt_set_function(timer timer, void (*function)(void *), void * interrupt_data){
+    ERROR_ASSERT(TIMER_INTERRUPT_IS_LEGAL(timer), ERROR_CODE_TIMER_INTERRUPT_ILLEGAL_TIMER);
     timer_interrupt_functions[timer] = function;
     timer_interrupt_data[timer] = interrupt_data;
 }
-
-#define TIMER_INTERRUPT_CALL_FUNCTION(timer) (*timer_interrupt_functions[timer])(timer_interrupt_data[timer])
 
 #if MCU_TYPE == ATMEGA_168PA
 
@@ -18,6 +21,7 @@ const uint16_t prescale_factors_t01[] = {1, 8, 64, 256, 1024};
 const uint16_t prescale_factors_t2[] = {1, 8, 32, 64, 128, 256, 1024};
 const uint16_t *prescale_factors[TIMER_COUNT] = {prescale_factors_t01, prescale_factors_t01, prescale_factors_t2};
 const uint8_t prescale_factor_count[TIMER_COUNT] = {5, 5, 7};
+
 volatile uint8_t *timer_enablement_byte[TIMER_COUNT] = {&TIMSK0, &TIMSK1, &TIMSK2};
 
 #define CALC_PERIOD(us, prescale) (us * (F_CPU / 1000000) / prescale - 1)
@@ -40,8 +44,8 @@ void timer_interrupt_init(void){
     TCCR2A |= (1 << WGM21);
 }
 
-#include "log.h"
 void timer_interrupt_set_period(timer timer, uint32_t us){
+    ERROR_ASSERT(TIMER_INTERRUPT_IS_LEGAL(timer), ERROR_CODE_TIMER_INTERRUPT_ILLEGAL_TIMER);
     uint32_t max_us_without_prescale;
     if(timer == TIMER_1){
         max_us_without_prescale = ((uint32_t)1 << 16) / (F_CPU / 1000000);
@@ -49,7 +53,7 @@ void timer_interrupt_set_period(timer timer, uint32_t us){
         max_us_without_prescale = ((uint32_t)1 << 8) / (F_CPU / 1000000);
     }
     uint8_t prescale_id = calc_prescale(timer, us, max_us_without_prescale);
-    /*todo check overflow*/
+    ERROR_ASSERT((timer == TIMER_1 ? (uint32_t)1 << 16 : (uint32_t)1 << 8) > CALC_PERIOD(us, prescale_factors[timer][prescale_id]), ERROR_CODE_TIMER_INTERRUPT_OVERFLOW);
     switch(timer){
         /*separate since TIMER_1 is 16 bytes*/
         case TIMER_0:
@@ -70,16 +74,18 @@ void timer_interrupt_set_period(timer timer, uint32_t us){
 }
 
 void timer_interrupt_enable(timer timer){
-    /*TODO check timer valid*/
+    ERROR_ASSERT(TIMER_INTERRUPT_IS_LEGAL(timer), ERROR_CODE_TIMER_INTERRUPT_ILLEGAL_TIMER);
+    ERROR_ASSERT(timer_interrupt_functions[timer], ERROR_CODE_TIMER_INTERRUPT_FUNCTION_NULL);
     *timer_enablement_byte[timer] |= 0b10;
 }
 
 void timer_interrupt_disable(timer timer){
+    ERROR_ASSERT(TIMER_INTERRUPT_IS_LEGAL(timer), ERROR_CODE_TIMER_INTERRUPT_ILLEGAL_TIMER);
     *timer_enablement_byte[timer] &= ~(uint8_t)0b10;
 }
 
 void timer_interrupt_reset(timer timer){
-    /*TODO check timer valid*/
+    ERROR_ASSERT(TIMER_INTERRUPT_IS_LEGAL(timer), ERROR_CODE_TIMER_INTERRUPT_ILLEGAL_TIMER);
     switch(timer){
         /*separate since TIMER_1 is 16 bytes*/
         case TIMER_0:

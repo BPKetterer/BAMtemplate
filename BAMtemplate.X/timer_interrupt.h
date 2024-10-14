@@ -11,6 +11,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "config.h"
+#include "error.h"
 
 #if MCU_TYPE == ATMEGA_168PA
 typedef enum{
