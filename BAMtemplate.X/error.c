@@ -56,7 +56,7 @@ void error_handler_serial(error_code error_code) {
 void error_handler_led(error_code error_code) {
     (void) error_code;
     #if ERROR_CHECK
-    if(error_led_port != PORT_UNDEFINED){
+    if(error_led_port == PORT_UNDEFINED){
         error_handler_serial(ERROR_CODE_ERROR_UNDEFINED_LED);
     }
     #endif
