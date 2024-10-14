@@ -24,7 +24,7 @@ void external_interrupt_c(void * interrupt_data){
     queue_append((Queue) interrupt_data, PORT_READ(PORT_C));
 }
 
-void timer_interrupt_1(void * interrupt_data){
+void timer_interrupt(void * interrupt_data){
     (void) interrupt_data;
     PORT_WRITE(PORT_D) ^= 1 << 7;
 }
@@ -48,10 +48,10 @@ int main(void){
     external_interrupt_enable_masked(PORT_C, 0x03);
     
     timer_interrupt_init();
-    timer_interrupt_set_function(TIMER_1, &timer_interrupt_1, 0);
+    timer_interrupt_set_function(TIMER_1, &timer_interrupt, 0);
     timer_interrupt_set_period(TIMER_1, 500 * 1000UL);
     timer_interrupt_enable(TIMER_1);
-    
+
     interrupt_global_enable();
     
     print_config();
