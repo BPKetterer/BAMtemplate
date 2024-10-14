@@ -14,6 +14,8 @@
 #include "port.h"
 #include "error.h"
 
+void external_interrupt_init(void);
+
 void external_interrupt_enable(port port, uint8_t pin);
 
 void external_interrupt_disable(port port, uint8_t pin);

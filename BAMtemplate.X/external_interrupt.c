@@ -34,6 +34,8 @@ ISR(PCINT2_vect){
     external_interrupt_d_function(external_interrupt_d_data);
 }
 
+void external_interrupt_init(void){}
+
 void external_interrupt_enable_masked(port port, uint8_t mask){
     ERROR_ASSERT(port_is_valid(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
     switch(port){

@@ -43,9 +43,11 @@ int main(void){
     
     PORT_SET_WRITE(PORT_D) |= 1 << 7;
     
+    external_interrupt_init();
     external_interrupt_set_function(PORT_C, &external_interrupt_c, (void *) re_queue);
     external_interrupt_enable_masked(PORT_C, 0x03);
     
+    timer_interrupt_init();
     timer_interrupt_set_function(TIMER_1, &timer_interrupt_1, 0);
     timer_interrupt_set_period(TIMER_1, 500 * 1000UL);
     timer_interrupt_enable(TIMER_1);
