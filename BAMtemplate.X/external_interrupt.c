@@ -37,7 +37,9 @@ ISR(PCINT2_vect){
     EXTERNAL_INTERRUPT_CALL_FUNCTION(PORT_D);
 }
 
-void external_interrupt_init(void){}
+void external_interrupt_init(void){
+    /*not needed for atmega_168pa*/
+}
 
 void external_interrupt_enable_masked(port port, uint8_t mask){
     ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
