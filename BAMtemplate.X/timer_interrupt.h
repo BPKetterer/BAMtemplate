@@ -36,6 +36,7 @@ void timer_interrupt_disable(timer timer);
 
 void timer_interrupt_reset(timer timer);
 
+uint32_t timer_interrupt_max_period_us(timer timer);
 
 #endif	/* TIMER_INTERRUPT_H */
 
