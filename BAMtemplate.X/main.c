@@ -32,7 +32,7 @@ void timer_interrupt_1(void * interrupt_data){
 int main(void){
     serial_init(4800);
     error_handler_configure_led(PORT_B, 0);
-    error_set_handler(&error_handler_led_and_serial);
+    error_set_basic_handler(ERROR_HANDLER_LED_AND_SERIAL);
     print_str("\n\n\n");
     
     Button left_button = button_create(PORT_B, 1);
