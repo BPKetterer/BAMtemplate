@@ -23,6 +23,8 @@ typedef enum{
     #error "mcu type not implemented for timer_interrupt.h"
 #endif
 
+void timer_interrupt_init(void);
+
 void timer_interrupt_set_period(timer timer, unsigned long us);
 
 void timer_interrupt_set_function(timer timer, void (*function)(void *), void * interrupt_data);
