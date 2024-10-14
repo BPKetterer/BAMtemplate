@@ -25,7 +25,7 @@ typedef enum{
     #error "mcu type not implemented for port.h"
 #endif
 
-typedef volatile unsigned char * port_ptr;
+typedef volatile uint8_t * port_ptr;
 
 
 port_ptr port_ptr_set_write(port port);
@@ -34,7 +34,7 @@ port_ptr port_ptr_write(port port);
 
 port_ptr port_ptr_read(port port);
 
-unsigned char port_is_valid(port port);
+uint8_t port_is_valid(port port);
 
 #define PORT_SET_WRITE(port) (*port_ptr_set_write(port))
 

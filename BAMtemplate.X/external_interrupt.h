@@ -14,13 +14,13 @@
 #include "port.h"
 #include "error.h"
 
-void external_interrupt_enable(port port, unsigned char pin);
+void external_interrupt_enable(port port, uint8_t pin);
 
-void external_interrupt_disable(port port, unsigned char pin);
+void external_interrupt_disable(port port, uint8_t pin);
 
-void external_interrupt_enable_masked(port port, unsigned char mask);
+void external_interrupt_enable_masked(port port, uint8_t mask);
 
-void external_interrupt_disable_masked(port port, unsigned char mask);
+void external_interrupt_disable_masked(port port, uint8_t mask);
 
 void external_interrupt_set_function(port port, void (*function)(void *), void * interrupt_data);
 

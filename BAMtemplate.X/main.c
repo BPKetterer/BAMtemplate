@@ -62,13 +62,13 @@ int main(void){
         
         print_bool(button_is_pressed(left_button));
         print_str(" ");
-        print_long(button_duration(left_button));
+        print_int64(button_duration(left_button));
         print_str("   ");
         print_bool(button_is_pressed(right_button));
         print_str(" ");
-        print_long(button_duration(right_button));
+        print_int64(button_duration(right_button));
         print_str("   ");
-        print_long(rotary_encoder_get_counter(rotary_encoder));
+        print_int64(rotary_encoder_get_counter(rotary_encoder));
         print_nl();
     }
     return 0;

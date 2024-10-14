@@ -1,6 +1,6 @@
 #include "timer_interrupt.h"
 
-unsigned char calc_prescale(unsigned long us, unsigned long max_us_without_prescale);
+uint8_t calc_prescale(uint32_t us, uint32_t max_us_without_prescale);
 
 void (*timer_interrupt_functions[TIMER_COUNT])(void *) = {};
 void * timer_interrupt_data[TIMER_COUNT] = {};
@@ -14,8 +14,8 @@ void timer_interrupt_set_function(timer timer, void (*function)(void *), void * 
 
 #if MCU_TYPE == ATMEGA_168PA
 
-const unsigned int prescale_factors[] = {1, 8, 64, 256, 1024};
-volatile unsigned char *timer_enablement_byte[TIMER_COUNT] = {&TIMSK0, &TIMSK1, &TIMSK2};
+const uint16_t prescale_factors[] = {1, 8, 64, 256, 1024};
+volatile uint8_t *timer_enablement_byte[TIMER_COUNT] = {&TIMSK0, &TIMSK1, &TIMSK2};
 
 #define CALC_PERIOD(us, prescale) (us * F_CPU / prescale / 1000000 - 1)
 
@@ -37,28 +37,28 @@ void timer_interrupt_init(void){
     TCCR2A |= (1 << WGM21);
 }
 
-void timer_interrupt_set_period(timer timer, unsigned long us){
-    unsigned long max_us_without_prescale;
+void timer_interrupt_set_period(timer timer, uint32_t us){
+    uint32_t max_us_without_prescale;
     if(timer == TIMER_1){
         max_us_without_prescale = (float)(1UL << 16) / (F_CPU / 1000000);
     } else {
         max_us_without_prescale = (float)(1UL << 8) / (F_CPU / 1000000);
     }
-    unsigned char prescale_id = calc_prescale(us, max_us_without_prescale);
+    uint8_t prescale_id = calc_prescale(us, max_us_without_prescale);
     /*todo check overflow*/
     switch(timer){
         /*separate since TIMER_1 is 16 bytes*/
         case TIMER_0:
-            OCR0A = (unsigned char)CALC_PERIOD(us, prescale_factors[prescale_id]);
-            TCCR0B = (TCCR0B & ~(unsigned char)0b111) | (prescale_id + 1);
+            OCR0A = (uint8_t)CALC_PERIOD(us, prescale_factors[prescale_id]);
+            TCCR0B = (TCCR0B & ~(uint8_t)0b111) | (prescale_id + 1);
             break;
         case TIMER_1:
             OCR1A = (uint16_t)CALC_PERIOD(us, prescale_factors[prescale_id]);
-            TCCR1B = (TCCR1B & ~(unsigned char)0b111) | (prescale_id + 1);
+            TCCR1B = (TCCR1B & ~(uint8_t)0b111) | (prescale_id + 1);
             break;
         case TIMER_2:
-            OCR2A = (unsigned char)CALC_PERIOD(us, prescale_factors[prescale_id]);
-            TCCR2B = (TCCR2B & ~(unsigned char)0b111) | (prescale_id + 1);
+            OCR2A = (uint8_t)CALC_PERIOD(us, prescale_factors[prescale_id]);
+            TCCR2B = (TCCR2B & ~(uint8_t)0b111) | (prescale_id + 1);
             break;
         default:
             break;
@@ -71,7 +71,7 @@ void timer_interrupt_enable(timer timer){
 }
 
 void timer_interrupt_disable(timer timer){
-    *timer_enablement_byte[timer] &= ~(unsigned char)0b10;
+    *timer_enablement_byte[timer] &= ~(uint8_t)0b10;
 }
 
 void timer_interrupt_reset(timer timer){
@@ -97,8 +97,8 @@ void timer_interrupt_reset(timer timer){
     #error "mcu type not implemented for timer_interrupt.c"
 #endif
 
-unsigned char calc_prescale(unsigned long us, unsigned long max_us_without_prescale){
-    unsigned char prescale_id = 0;
+uint8_t calc_prescale(uint32_t us, uint32_t max_us_without_prescale){
+    uint8_t prescale_id = 0;
     while(us / prescale_factors[prescale_id] > max_us_without_prescale && prescale_id + 1
             < sizeof(prescale_factors) / sizeof(prescale_factors[0])){
         prescale_id++;

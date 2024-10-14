@@ -2,7 +2,7 @@
 #include "error.h"
 
 
-unsigned char port_is_valid(port port){
+uint8_t port_is_valid(port port){
     return port >= PORT_FIRST && port <= PORT_LAST;
 }
 

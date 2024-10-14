@@ -1,14 +1,14 @@
 #include "external_interrupt.h"
 
 
-void external_interrupt_enable(port port, unsigned char pin){
+void external_interrupt_enable(port port, uint8_t pin){
     ERROR_ASSERT(pin < 8, ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PIN);
-    external_interrupt_enable_masked(port, (unsigned char)1 << pin);
+    external_interrupt_enable_masked(port, (uint8_t)1 << pin);
 }
 
-void external_interrupt_disable(port port, unsigned char pin){
+void external_interrupt_disable(port port, uint8_t pin){
     ERROR_ASSERT(pin < 8, ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PIN);
-    external_interrupt_disable_masked(port, (unsigned char)1 << pin);
+    external_interrupt_disable_masked(port, (uint8_t)1 << pin);
 }
 
 
@@ -34,7 +34,7 @@ ISR(PCINT2_vect){
     external_interrupt_d_function(external_interrupt_d_data);
 }
 
-void external_interrupt_enable_masked(port port, unsigned char mask){
+void external_interrupt_enable_masked(port port, uint8_t mask){
     ERROR_ASSERT(port_is_valid(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
     switch(port){
         case PORT_B:
@@ -56,25 +56,25 @@ void external_interrupt_enable_masked(port port, unsigned char mask){
     }
 }
 
-void external_interrupt_disable_masked(port port, unsigned char mask){
+void external_interrupt_disable_masked(port port, uint8_t mask){
     ERROR_ASSERT(port_is_valid(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
     switch(port){
         case PORT_B:
             PCMSK0 &= ~mask;
             if(PCMSK0 == 0){
-                PCICR &= ~((unsigned char)1 << PCIE0);
+                PCICR &= ~((uint8_t)1 << PCIE0);
             }
             break;
         case PORT_C:
             PCMSK1 &= ~mask;
             if(PCMSK1 == 0){
-                PCICR &= ~((unsigned char)1 << PCIE1);
+                PCICR &= ~((uint8_t)1 << PCIE1);
             }
             break;
         case PORT_D:
             PCMSK2 &= ~mask;
             if(PCMSK2 == 0){
-                PCICR &= ~((unsigned char)1 << PCIE2);
+                PCICR &= ~((uint8_t)1 << PCIE2);
             }
             break;
         /*default unreachable*/

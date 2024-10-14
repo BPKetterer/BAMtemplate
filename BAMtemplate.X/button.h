@@ -20,8 +20,8 @@
  */
 struct button {
     port_ptr port_ptr_read;
-    unsigned char pin;
-    signed char status;
+    uint8_t pin;
+    int8_t status;
 };
 
 /*
@@ -37,7 +37,7 @@ typedef struct button * Button;
  * @param   pin     The pin of the button on the specified port
  * @return  the handle for the button
  */
-Button button_create(port port, unsigned char pin);
+Button button_create(port port, uint8_t pin);
 
 /*
  * Checks the input and updates the status of the button.
@@ -50,7 +50,7 @@ void button_update(Button button);
  * @param   button  The button that is checked
  * @return  A non-zero value, when the button is pressed.
  */
-unsigned char button_is_pressed(Button button);
+uint8_t button_is_pressed(Button button);
 
 /*
  * Returns how long a button is in the current state.
@@ -58,7 +58,7 @@ unsigned char button_is_pressed(Button button);
  * @return  The amount of updates called where the button did not change its
  *          state (caps at 127)
  */
-unsigned char button_duration(Button button);
+uint8_t button_duration(Button button);
 
 #endif	/* BUTTON_H */
 

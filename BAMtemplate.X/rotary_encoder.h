@@ -14,21 +14,21 @@
 
 
 struct rotary_encoder{
-    unsigned char status;
-    unsigned char transitions[4];
-    unsigned char mask;
-    signed char state_counter;
+    uint8_t status;
+    uint8_t transitions[4];
+    uint8_t mask;
+    int8_t state_counter;
 };
 
 typedef struct rotary_encoder * RotaryEncoder;
 
-RotaryEncoder rotary_encoder_create(unsigned char pin_a, unsigned char pin_b);
+RotaryEncoder rotary_encoder_create(uint8_t pin_a, uint8_t pin_b);
 
-void rotary_encoder_update(RotaryEncoder rotary_encoder, unsigned char data);
+void rotary_encoder_update(RotaryEncoder rotary_encoder, uint8_t data);
 
-void rotary_encoder_update_with_queue(RotaryEncoder rotary_encoder, Queue queue, unsigned char remove_used_elements);
+void rotary_encoder_update_with_queue(RotaryEncoder rotary_encoder, Queue queue, uint8_t remove_used_elements);
 
-signed char rotary_encoder_get_counter(RotaryEncoder rotary_encoder);
+int8_t rotary_encoder_get_counter(RotaryEncoder rotary_encoder);
 
 void rotary_encoder_reset_counter(RotaryEncoder rotary_encoder);
 

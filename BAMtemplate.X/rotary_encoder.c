@@ -1,7 +1,7 @@
 #include "rotary_encoder.h"
 
 
-RotaryEncoder rotary_encoder_create(unsigned char pin_a, unsigned char pin_b){
+RotaryEncoder rotary_encoder_create(uint8_t pin_a, uint8_t pin_b){
     ERROR_ASSERT(pin_a < 8, ERROR_CODE_ROTARY_ENCODER_ILLEGAL_PIN);
     ERROR_ASSERT(pin_b < 8, ERROR_CODE_ROTARY_ENCODER_ILLEGAL_PIN);
     ERROR_ASSERT(pin_a != pin_b, ERROR_CODE_ROTARY_ENCODER_SAME_PIN);
@@ -16,19 +16,19 @@ RotaryEncoder rotary_encoder_create(unsigned char pin_a, unsigned char pin_b){
     return rotary_encoder;
 }
 
-void rotary_encoder_update(RotaryEncoder rotary_encoder, unsigned char data){
+void rotary_encoder_update(RotaryEncoder rotary_encoder, uint8_t data){
     ERROR_ASSERT(rotary_encoder, ERROR_CODE_ROTARY_ENCODER_HANDLE_NULL);
-    unsigned char new_status;
+    uint8_t new_status;
     for(new_status = 0; rotary_encoder->transitions[new_status] != (data & rotary_encoder->mask); new_status++)
         ;
-    signed char status_diff = ((unsigned char)(new_status - rotary_encoder->status + 5) & 0x3) - 1;
+    int8_t status_diff = ((uint8_t)(new_status - rotary_encoder->status + 5) & 0x3) - 1;
     rotary_encoder->status = new_status;
     if(status_diff != 2){
         rotary_encoder->state_counter += status_diff;
     }
 }
 
-void rotary_encoder_update_with_queue(RotaryEncoder rotary_encoder, Queue queue, unsigned char remove_used_elements){
+void rotary_encoder_update_with_queue(RotaryEncoder rotary_encoder, Queue queue, uint8_t remove_used_elements){
     ERROR_ASSERT(rotary_encoder, ERROR_CODE_ROTARY_ENCODER_HANDLE_NULL);
     ERROR_ASSERT(queue, ERROR_CODE_ROTARY_ENCODER_QUEUE_HANDLE_NULL);
     if(remove_used_elements){
@@ -36,14 +36,14 @@ void rotary_encoder_update_with_queue(RotaryEncoder rotary_encoder, Queue queue,
             rotary_encoder_update(rotary_encoder, queue_pop(queue));
         }
     } else {
-        unsigned char idx;
+        uint8_t idx;
         for(idx = 0; idx < queue_size(queue); idx++){
             rotary_encoder_update(rotary_encoder, queue_get(queue, idx));
         }
     }
 }
 
-signed char rotary_encoder_get_counter(RotaryEncoder rotary_encoder){
+int8_t rotary_encoder_get_counter(RotaryEncoder rotary_encoder){
     ERROR_ASSERT(rotary_encoder, ERROR_CODE_ROTARY_ENCODER_HANDLE_NULL);
     return rotary_encoder->state_counter;
 }

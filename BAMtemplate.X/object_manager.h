@@ -16,11 +16,11 @@
 #error "OBJECT_MANAGER_SIZE not defined in config.h"
 #endif
 
-void * object_manager_allocate(unsigned int size);
+void * object_manager_allocate(uint16_t size);
 
-unsigned int object_manager_used_size(void);
+uint16_t object_manager_used_size(void);
 
-unsigned int object_manager_unused_size(void);
+uint16_t object_manager_unused_size(void);
 
 void object_manager_print_info(void);
 

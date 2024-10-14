@@ -1,10 +1,10 @@
 #include "button.h"
 
 
-Button button_create(port port, unsigned char pin){
+Button button_create(port port, uint8_t pin){
     ERROR_ASSERT(port_is_valid(port), ERROR_CODE_BUTTON_ILLEGAL_PORT);
     ERROR_ASSERT(pin < 8, ERROR_CODE_BUTTON_ILLEGAL_PIN);
-    PORT_SET_WRITE(port) &= ~((unsigned char)1 << pin);
+    PORT_SET_WRITE(port) &= ~((uint8_t)1 << pin);
     Button button = (Button) object_manager_allocate(sizeof(struct button));
     button->pin = pin;
     button->port_ptr_read = port_ptr_read(port);
@@ -29,12 +29,12 @@ void button_update(Button button){
     }
 }
 
-unsigned char button_is_pressed(Button button){
+uint8_t button_is_pressed(Button button){
     ERROR_ASSERT(button, ERROR_CODE_BUTTON_HANDLE_NULL);
     return button->status >= 0;
 }
 
-unsigned char button_duration(Button button){
+uint8_t button_duration(Button button){
     ERROR_ASSERT(button, ERROR_CODE_BUTTON_HANDLE_NULL);
     if(button->status >= 0){
         return button->status;

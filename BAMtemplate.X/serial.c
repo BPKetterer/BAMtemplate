@@ -7,11 +7,11 @@
 #error "F_CPU not defined/known in serial.c"
 #endif
 
-void serial_init(unsigned long baud_rate){
+void serial_init(uint32_t baud_rate){
     /*Set baud rate */
-    unsigned long ubrr = F_CPU / 16 / baud_rate - 1;
-    UBRR0H = (unsigned char)(ubrr>>8);
-    UBRR0L = (unsigned char)ubrr;
+    uint32_t ubrr = F_CPU / 16 / baud_rate - 1;
+    UBRR0H = (uint8_t)(ubrr>>8);
+    UBRR0L = (uint8_t)ubrr;
     /*Enable receiver and transmitter */
     UCSR0B |= (1<<RXEN0) | (1<<TXEN0);
     /* Set frame format: 8 data, 1 stop bit */
@@ -19,7 +19,7 @@ void serial_init(unsigned long baud_rate){
 }
 
 
-void serial_send(unsigned char c){
+void serial_send(uint8_t c){
     /* Wait for empty transmit buffer */
     while ( !( UCSR0A & (1<<UDRE0)) )
         ;
@@ -28,7 +28,7 @@ void serial_send(unsigned char c){
 }
 
 
-unsigned char serial_receive(void){
+uint8_t serial_receive(void){
     /* Wait for data to be received */
     while ( !(UCSR0A & (1<<RXC0)) )
         ;
@@ -37,7 +37,7 @@ unsigned char serial_receive(void){
 }
 
 
-unsigned char serial_try_receive(unsigned char *success){
+uint8_t serial_try_receive(uint8_t *success){
     if(UCSR0A & (1<<RXC0)){
         *success = 1;
         return UDR0;

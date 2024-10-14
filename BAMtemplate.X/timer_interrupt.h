@@ -25,7 +25,7 @@ typedef enum{
 
 void timer_interrupt_init(void);
 
-void timer_interrupt_set_period(timer timer, unsigned long us);
+void timer_interrupt_set_period(timer timer, uint32_t us);
 
 void timer_interrupt_set_function(timer timer, void (*function)(void *), void * interrupt_data);
 

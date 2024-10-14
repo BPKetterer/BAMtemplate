@@ -46,7 +46,7 @@ void error_handler_serial(error_code error_code);
 
 void error_handler_led(error_code error_code);
 
-void error_handler_configure_led(port port, unsigned char pin);
+void error_handler_configure_led(port port, uint8_t pin);
 
 void error_handler_led_and_serial(error_code error_code);
 

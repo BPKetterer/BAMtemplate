@@ -16,16 +16,16 @@
     print_str(var); \
     print_nl()
 
-#define LOG_LONG(var) \
+#define LOG_INT64(var) \
     print_str(#var); \
     print_str(" = "); \
-    print_long(var); \
+    print_int64(var); \
     print_nl()
 
-#define LOG_ULONG(var) \
+#define LOG_UINT64(var) \
     print_str(#var); \
     print_str(" = "); \
-    print_ulong(var); \
+    print_uint64(var); \
     print_nl()
 
 #define LOG_FLOAT(var) \

@@ -12,23 +12,23 @@
 #include "object_manager.h"
 
 struct queue{
-    volatile unsigned char * data;
-    unsigned char max_length;
-    volatile unsigned char used_length;
-    volatile unsigned char first;
+    volatile uint8_t * data;
+    uint8_t max_length;
+    volatile uint8_t used_length;
+    volatile uint8_t first;
 };
 
 typedef struct queue * Queue;
 
-Queue queue_create(unsigned char length);
+Queue queue_create(uint8_t length);
 
-void queue_append(Queue queue, unsigned char data);
+void queue_append(Queue queue, uint8_t data);
 
-unsigned char queue_pop(Queue queue);
+uint8_t queue_pop(Queue queue);
 
-unsigned char queue_get(Queue queue, unsigned char id);
+uint8_t queue_get(Queue queue, uint8_t id);
 
-unsigned char queue_size(Queue queue);
+uint8_t queue_size(Queue queue);
 
 void queue_clear(Queue queue);
 
