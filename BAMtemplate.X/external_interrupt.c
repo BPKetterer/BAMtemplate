@@ -1,5 +1,9 @@
 #include "external_interrupt.h"
 
+void (*external_interrupt_functions[PORT_COUNT])(void *) = {};
+void * external_interrupt_data[PORT_COUNT] = {};
+
+#define EXTERNAL_INTERRUPT_CALL_FUNCTION(port) (*external_interrupt_functions[port])(external_interrupt_data[port])
 
 void external_interrupt_enable(port port, uint8_t pin){
     ERROR_ASSERT(pin < 8, ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PIN);
@@ -11,97 +15,42 @@ void external_interrupt_disable(port port, uint8_t pin){
     external_interrupt_disable_masked(port, (uint8_t)1 << pin);
 }
 
+void external_interrupt_set_function(port port, void (*function)(void *), void * interrupt_data){
+    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
+    external_interrupt_functions[port] = function;
+    external_interrupt_data[port] = interrupt_data;
+}
 
 #if MCU_TYPE == ATMEGA_168PA
 
-void (*external_interrupt_b_function)(void *) = 0;
-void (*external_interrupt_c_function)(void *) = 0;
-void (*external_interrupt_d_function)(void *) = 0;
-
-void * external_interrupt_b_data = 0;
-void * external_interrupt_c_data = 0;
-void * external_interrupt_d_data = 0;
+volatile uint8_t *external_interrupt_mask_byte[PORT_COUNT] = {&PCMSK0, &PCMSK1, &PCMSK2};
 
 ISR(PCINT0_vect){
-    external_interrupt_b_function(external_interrupt_b_data);
+    EXTERNAL_INTERRUPT_CALL_FUNCTION(PORT_B);
 }
 
 ISR(PCINT1_vect){
-    external_interrupt_c_function(external_interrupt_c_data);
+    EXTERNAL_INTERRUPT_CALL_FUNCTION(PORT_C);
 }
 
 ISR(PCINT2_vect){
-    external_interrupt_d_function(external_interrupt_d_data);
+    EXTERNAL_INTERRUPT_CALL_FUNCTION(PORT_D);
 }
 
 void external_interrupt_init(void){}
 
 void external_interrupt_enable_masked(port port, uint8_t mask){
     ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
-    switch(port){
-        case PORT_B:
-            ERROR_ASSERT(external_interrupt_b_function, ERROR_CODE_EXTERNAL_INTERRUPT_FUNCTION_NULL);
-            PCICR |= (1 << PCIE0);
-            PCMSK0 |= mask;
-            break;
-        case PORT_C:
-            ERROR_ASSERT(external_interrupt_c_function, ERROR_CODE_EXTERNAL_INTERRUPT_FUNCTION_NULL);
-            PCICR |= (1 << PCIE1);
-            PCMSK1 |= mask;
-            break;
-        case PORT_D:
-            ERROR_ASSERT(external_interrupt_d_function, ERROR_CODE_EXTERNAL_INTERRUPT_FUNCTION_NULL);
-            PCICR |= (1 << PCIE2);
-            PCMSK2 |= mask;
-            break;
-        default:
-            break;
-    }
+    ERROR_ASSERT(external_interrupt_functions[port], ERROR_CODE_EXTERNAL_INTERRUPT_FUNCTION_NULL);
+    PCICR |= (uint8_t)(1 << port);
+    *external_interrupt_mask_byte[port] |= mask;
 }
 
 void external_interrupt_disable_masked(port port, uint8_t mask){
     ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
-    switch(port){
-        case PORT_B:
-            PCMSK0 &= ~mask;
-            if(PCMSK0 == 0){
-                PCICR &= ~((uint8_t)1 << PCIE0);
-            }
-            break;
-        case PORT_C:
-            PCMSK1 &= ~mask;
-            if(PCMSK1 == 0){
-                PCICR &= ~((uint8_t)1 << PCIE1);
-            }
-            break;
-        case PORT_D:
-            PCMSK2 &= ~mask;
-            if(PCMSK2 == 0){
-                PCICR &= ~((uint8_t)1 << PCIE2);
-            }
-            break;
-        default:
-            break;
-    }
-}
-
-void external_interrupt_set_function(port port, void (*function)(void *), void * interrupt_data){
-    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
-    switch(port){
-        case PORT_B:
-            external_interrupt_b_function = function;
-            external_interrupt_b_data = interrupt_data;
-            break;
-        case PORT_C:
-            external_interrupt_c_function = function;
-            external_interrupt_c_data = interrupt_data;
-            break;
-        case PORT_D:
-            external_interrupt_d_function = function;
-            external_interrupt_d_data = interrupt_data;
-            break;
-        default:
-            break;
+    *external_interrupt_mask_byte[port] &= ~mask;
+    if(*external_interrupt_mask_byte[port] == 0){
+        PCICR &= ~(uint8_t)(1 << port);
     }
 }
 
