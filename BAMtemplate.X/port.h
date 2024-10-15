@@ -13,7 +13,7 @@
 
 /*
  * Contains constants to reference the different ports of the selected hardware.
- * Has a PORT_UNDEFINED constant.
+ * Has a PORT_UNDEFINED (= -1) constant. Actual ports start with 0.
  * Implementation further below.
  */
 typedef enum port port;
@@ -43,6 +43,8 @@ typedef enum port port;
 
 /*
  * Test if the passed port is valid.
+ * @param   port    The port that is tested
+ * @return  "true" if the port is a valid port
  */
 uint8_t port_is_valid(port port);
 

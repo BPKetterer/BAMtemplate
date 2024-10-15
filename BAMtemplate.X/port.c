@@ -1,6 +1,6 @@
 #include "port.h"
 
-uint8_t port_is_valid(port port){
+uint8_t port_is_valid(port port) {
     return (port >= 0) && (port < PORT_COUNT);
 }
 
@@ -17,5 +17,5 @@ volatile uint8_t *port_write[PORT_COUNT] = {&PORTB, &PORTC, &PORTD};
 volatile uint8_t *port_read[PORT_COUNT] = {&PINB, &PINC, &PIND};
 
 #else
-    #error "mcu type not implemented for port.c"
+#error "mcu type not implemented for port.c"
 #endif
