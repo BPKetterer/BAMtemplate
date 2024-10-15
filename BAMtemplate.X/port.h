@@ -10,31 +10,72 @@
 
 #include "config.h"
 #include <avr/io.h>
-#include "print.h"
+
+/*
+ * Contains constants to reference the different ports of the selected hardware.
+ * Has a PORT_UNDEFINED constant.
+ * Implementation further below.
+ */
+typedef enum port port;
+
+/*
+ * Evaluates to the number of ports.
+ */
+#define PORT_COUNT
+
+/*
+ * Evaluates to an lvalue of the register which controls the read/write
+ * property of the passed port.
+ */
+#define PORT_SET_WRITE(port)
+
+/*
+ * Evaluates to an lvalue of the register which writes data to the the passed
+ * port.
+ */
+#define PORT_WRITE(port)
+
+/*
+ * Evaluates to an lvalue of the register which reads data from the the passed
+ * port.
+ */
+#define PORT_READ(port)
+
+/*
+ * Test if the passed port is valid.
+ */
+uint8_t port_is_valid(port port);
+
+
+
+/* -+-+--------------------------------+-+- */
+/* -+-+- MCU SPECIFIC IMPLEMENTATION: -+-+- */
+/* -+-+--VVVVVVVVVVVVVVVVVVVVVVVVVVVV--+-+- */
+
+#undef PORT_COUNT
+#undef PORT_SET_WRITE
+#undef PORT_WRITE
+#undef PORT_READ
 
 #if MCU_TYPE == ATMEGA_168PA
-typedef enum{
+
+enum port {
     PORT_UNDEFINED = -1,
     PORT_B = 0,
     PORT_C,
     PORT_D,
-    PORT_COUNT = 3,
-} port;
+};
+#define PORT_COUNT 3
 extern volatile uint8_t *port_set_write[PORT_COUNT];
 extern volatile uint8_t *port_write[PORT_COUNT];
 extern volatile uint8_t *port_read[PORT_COUNT];
-#else
-    #error "mcu type not implemented for port.h"
-#endif
-
-
 #define PORT_SET_WRITE(port) (*(port_set_write[port]))
-
 #define PORT_WRITE(port) (*(port_write[port]))
-
 #define PORT_READ(port) (*(port_read[port]))
 
-#define PORT_IS_VALID(port) ((port) >= 0 && (port) < PORT_COUNT)
+#else
+#error "mcu type not implemented for port.h"
+#endif
 
 #endif	/* PORT_H */
 

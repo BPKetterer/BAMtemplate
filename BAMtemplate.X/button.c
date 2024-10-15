@@ -2,7 +2,7 @@
 
 
 Button button_create(port port, uint8_t pin){
-    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_BUTTON_ILLEGAL_PORT);
+    ERROR_ASSERT(port_is_valid(port), ERROR_CODE_BUTTON_ILLEGAL_PORT);
     ERROR_ASSERT(pin < 8, ERROR_CODE_BUTTON_ILLEGAL_PIN);
     PORT_SET_WRITE(port) &= ~((uint8_t)1 << pin);
     Button button = (Button) object_manager_allocate(sizeof(struct button));

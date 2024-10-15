@@ -16,7 +16,7 @@ void external_interrupt_disable(port port, uint8_t pin){
 }
 
 void external_interrupt_set_function(port port, void (*function)(void *), void * interrupt_data){
-    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
+    ERROR_ASSERT(port_is_valid(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
     external_interrupt_functions[port] = function;
     external_interrupt_data[port] = interrupt_data;
 }
@@ -42,14 +42,14 @@ void external_interrupt_init(void){
 }
 
 void external_interrupt_enable_masked(port port, uint8_t mask){
-    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
+    ERROR_ASSERT(port_is_valid(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
     ERROR_ASSERT(external_interrupt_functions[port], ERROR_CODE_EXTERNAL_INTERRUPT_FUNCTION_NULL);
     PCICR |= (uint8_t)(1 << port);
     *external_interrupt_mask_byte[port] |= mask;
 }
 
 void external_interrupt_disable_masked(port port, uint8_t mask){
-    ERROR_ASSERT(PORT_IS_VALID(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
+    ERROR_ASSERT(port_is_valid(port), ERROR_CODE_EXTERNAL_INTERRUPT_ILLEGAL_PORT);
     *external_interrupt_mask_byte[port] &= ~mask;
     if(*external_interrupt_mask_byte[port] == 0){
         PCICR &= ~(uint8_t)(1 << port);
