@@ -3,6 +3,9 @@
  * Author: Benni
  *
  * Created on September 29, 2024, 1:54 PM
+ * 
+ * This header manages the interaction (reading and writing) with the ports
+ * of the MCU.
  */
 
 #ifndef PORT_H
