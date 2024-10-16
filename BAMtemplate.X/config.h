@@ -38,7 +38,6 @@ typedef enum{
 #define OBJECT_MANAGER_SIZE     50
 #define MIN_PAUSE_US            0
 #define OBJECT_MANAGER_PRINT    DISABLED
-#define PRINT_CONFIG            DISABLED
 
 
 
@@ -63,9 +62,6 @@ typedef enum{
 #endif
 #ifndef OBJECT_MANAGER_PRINT
 #error "OBJECT_MANAGER_PRINT not defined in config.h"
-#endif
-#ifndef PRINT_CONFIG
-#error "PRINT_CONFIG not defined in config.h"
 #endif
 
 #endif	/* CONFIG_H */

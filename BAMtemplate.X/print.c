@@ -79,33 +79,3 @@ void print_hex_half(uint8_t h){
         serial_send('A' + h - 10);
     }
 }
-
-void print_config(void){
-    #if PRINT_CONFIG
-    print_str("Selected MCU: ");
-    #if MCU_TYPE == MCU_TYPE_ATMEGA_168PA
-    print_str("ATMEGA_168PA\n");
-    #else
-    print_str("UNKNOWN!!!\n");
-    #endif
-    print_str("Expected clock frequency: ");
-    print_float((float)(F_CPU) / 1000000);
-    print_str(" MHz\n");
-    #if ERROR_CHECK
-    print_str("The system is checking for errors\n");
-    #else
-    print_str("The system is NOT checking for errors\n");
-    #endif
-    print_int64(OBJECT_MANAGER_SIZE);
-    print_str(" byte reserved for the object_manager\n");
-    #if MIN_PAUSE_US
-    print_str("pauses shorter than ");
-    print_float(MIN_PAUSE_US);
-    print_str(" us are skipped\n");
-    #else
-    print_str("No pauses are skipped\n");  
-    #endif
-    #else    
-    print_str("PRINT_CONFIG not enabled\n");
-    #endif
-}

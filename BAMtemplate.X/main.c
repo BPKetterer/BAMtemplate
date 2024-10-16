@@ -54,7 +54,6 @@ int main(void){
 
     interrupt_global_enable();
     
-    print_config();
     object_manager_print_info();
     
     while(1){
