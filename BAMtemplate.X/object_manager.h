@@ -12,10 +12,6 @@
 #include "print.h"
 #include "error.h"
 
-#ifndef OBJECT_MANAGER_SIZE
-#error "OBJECT_MANAGER_SIZE not defined in config.h"
-#endif
-
 void * object_manager_allocate(uint16_t size);
 
 uint16_t object_manager_used_size(void);

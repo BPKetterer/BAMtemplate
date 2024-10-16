@@ -12,11 +12,6 @@
 #include "print.h"
 #include "port.h"
 
-#ifndef ERROR_CHECK
-#define ERROR_CHECK 1
-#warn "ERROR_CHECK is not defined, defaulting to true"
-#endif
-
 typedef enum{
     ERROR_HANDLER_NONE,
     ERROR_HANDLER_SERIAL,

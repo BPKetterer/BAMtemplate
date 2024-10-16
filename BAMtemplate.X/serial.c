@@ -3,10 +3,6 @@
 
 #if MCU_TYPE == ATMEGA_168PA
 
-#ifndef F_CPU
-#error "F_CPU not defined/known in serial.c"
-#endif
-
 void serial_init(uint32_t baud_rate){
     /*Set baud rate */
     uint32_t ubrr = F_CPU / 16 / baud_rate - 1;
