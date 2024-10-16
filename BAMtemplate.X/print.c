@@ -83,7 +83,7 @@ void print_hex_half(uint8_t h){
 void print_config(void){
     #if PRINT_CONFIG
     print_str("Selected MCU: ");
-    #if MCU_TYPE == ATMEGA_168PA
+    #if MCU_TYPE == MCU_TYPE_ATMEGA_168PA
     print_str("ATMEGA_168PA\n");
     #else
     print_str("UNKNOWN!!!\n");

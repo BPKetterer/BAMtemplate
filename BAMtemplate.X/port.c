@@ -10,7 +10,7 @@ uint8_t port_is_valid(port port) {
 /* -+-+- MCU SPECIFIC IMPLEMENTATION: -+-+- */
 /* -+-+--VVVVVVVVVVVVVVVVVVVVVVVVVVVV--+-+- */
 
-#if MCU_TYPE == ATMEGA_168PA
+#if MCU_TYPE == MCU_TYPE_ATMEGA_168PA
 
 volatile uint8_t *port_set_write[PORT_COUNT] = {&DDRB, &DDRC, &DDRD};
 volatile uint8_t *port_write[PORT_COUNT] = {&PORTB, &PORTC, &PORTD};

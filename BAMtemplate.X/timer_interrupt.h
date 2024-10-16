@@ -13,7 +13,7 @@
 #include "config.h"
 #include "error.h"
 
-#if MCU_TYPE == ATMEGA_168PA
+#if MCU_TYPE == MCU_TYPE_ATMEGA_168PA
 typedef enum{
     TIMER_0 = 0,
     TIMER_1,

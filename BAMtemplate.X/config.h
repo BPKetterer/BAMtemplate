@@ -19,7 +19,7 @@
  * Supported MCU types.
  */
 typedef enum{
-    ATMEGA_168PA
+    MCU_TYPE_ATMEGA_168PA
 } mcu_type;
 
 
@@ -32,7 +32,7 @@ typedef enum{
 /* -+-+--VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV--+-+- */
 
 /* TODO adjust these configurations according to your requirements*/
-#define MCU_TYPE                ATMEGA_168PA
+#define MCU_TYPE                MCU_TYPE_ATMEGA_168PA
 #define F_CPU                   (1 * M_HZ)
 #define ERROR_CHECK             ENABLED
 #define OBJECT_MANAGER_SIZE     50

@@ -1,7 +1,7 @@
 #include "interrupt.h"
 
 
-#if MCU_TYPE == ATMEGA_168PA
+#if MCU_TYPE == MCU_TYPE_ATMEGA_168PA
 void interrupt_global_enable(void){
     sei();
 }

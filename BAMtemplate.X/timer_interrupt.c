@@ -27,7 +27,7 @@ uint8_t calc_prescale(timer timer, uint32_t us, uint32_t max_us_without_prescale
     return prescale_id;
 }
 
-#if MCU_TYPE == ATMEGA_168PA
+#if MCU_TYPE == MCU_TYPE_ATMEGA_168PA
 
 uint16_t prescale_factors_t01[] = {1, 8, 64, 256, 1024};
 uint16_t prescale_factors_t2[] = {1, 8, 32, 64, 128, 256, 1024};

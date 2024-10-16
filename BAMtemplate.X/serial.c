@@ -1,7 +1,7 @@
 #include "serial.h"
 
 
-#if MCU_TYPE == ATMEGA_168PA
+#if MCU_TYPE == MCU_TYPE_ATMEGA_168PA
 
 void serial_init(uint32_t baud_rate){
     /*Set baud rate */

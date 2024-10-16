@@ -21,7 +21,7 @@ void external_interrupt_set_function(port port, void (*function)(void *), void *
     external_interrupt_data[port] = interrupt_data;
 }
 
-#if MCU_TYPE == ATMEGA_168PA
+#if MCU_TYPE == MCU_TYPE_ATMEGA_168PA
 
 volatile uint8_t *external_interrupt_mask_byte[PORT_COUNT] = {&PCMSK0, &PCMSK1, &PCMSK2};
 

@@ -62,7 +62,7 @@ uint8_t port_is_valid(port port);
 #undef PORT_WRITE
 #undef PORT_READ
 
-#if MCU_TYPE == ATMEGA_168PA
+#if MCU_TYPE == MCU_TYPE_ATMEGA_168PA
 
 enum port {
     PORT_UNDEFINED = -1,
