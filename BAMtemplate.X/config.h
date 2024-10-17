@@ -35,9 +35,9 @@ typedef enum{
 #define MCU_TYPE                MCU_TYPE_ATMEGA_168PA
 #define F_CPU                   (1 * M_HZ)
 #define ERROR_CHECK             ENABLED
-#define OBJECT_MANAGER_SIZE     50
+#define OBJECT_MANAGER_SIZE     51
 #define MIN_PAUSE_US            0
-#define OBJECT_MANAGER_PRINT    DISABLED
+#define OBJECT_MANAGER_PRINT    ENABLED
 
 
 

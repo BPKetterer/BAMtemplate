@@ -21,7 +21,7 @@
 
 
 void external_interrupt_c(void * interrupt_data){
-    queue_append((Queue) interrupt_data, PORT_READ(PORT_C));
+    queue_try_append((Queue) interrupt_data, PORT_READ(PORT_C));
 }
 
 void timer_interrupt(void * interrupt_data){

@@ -13,9 +13,10 @@
 
 struct queue{
     volatile uint8_t * data;
-    uint8_t max_length;
-    volatile uint8_t used_length;
-    volatile uint8_t first;
+    volatile uint8_t length;
+    volatile uint8_t first_id;
+    volatile uint8_t free_id;
+    volatile uint8_t used;
 };
 
 typedef struct queue * Queue;
@@ -23,6 +24,8 @@ typedef struct queue * Queue;
 Queue queue_create(uint8_t length);
 
 void queue_append(Queue queue, uint8_t data);
+
+uint8_t queue_try_append(Queue queue, uint8_t data);
 
 uint8_t queue_pop(Queue queue);
 
