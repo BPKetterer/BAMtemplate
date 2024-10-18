@@ -48,9 +48,23 @@ void button_update(Button button);
 /*
  * Returns if a button is currently pressed.
  * @param   button  The button that is checked
- * @return  A non-zero value, when the button is pressed.
+ * @return  A non-zero value, when the button is pressed
  */
 uint8_t button_is_pressed(Button button);
+
+/*
+ * Returns if a button was pressed since the last cycle.
+ * @param   button  The button that is checked
+ * @return  A non-zero value, when the button was pressed since the last cycle
+ */
+uint8_t button_just_pressed(Button button);
+
+/*
+ * Returns if a button was released since the last cycle.
+ * @param   button  The button that is checked
+ * @return  A non-zero value, when the button was released since the last cycle
+ */
+uint8_t button_just_released(Button button);
 
 /*
  * Returns how long a button is in the current state.

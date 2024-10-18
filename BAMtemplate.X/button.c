@@ -34,6 +34,14 @@ uint8_t button_is_pressed(Button button){
     return button->status >= 0;
 }
 
+uint8_t button_just_pressed(Button button){
+    return button->status == 0;
+}
+
+uint8_t button_just_released(Button button){
+    return button->status == -1;
+}
+
 uint8_t button_duration(Button button){
     ERROR_ASSERT(button, ERROR_CODE_BUTTON_HANDLE_NULL);
     if(button->status >= 0){
