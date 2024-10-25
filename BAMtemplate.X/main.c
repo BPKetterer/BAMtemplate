@@ -31,8 +31,8 @@ void timer_interrupt(void * interrupt_data){
 
 int main(void){
     serial_init(4800);
-    error_handler_configure_led(PORT_B, 0);
-    error_set_basic_handler(ERROR_HANDLER_LED_AND_SERIAL);
+    error_configure_handler_led(PORT_B, 0);
+    error_set_handler(&error_handler_led_and_serial);
     print_str("\n\n\n");
     
     Button left_button = button_create(PORT_B, 1);

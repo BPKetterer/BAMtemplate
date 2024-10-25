@@ -13,13 +13,6 @@
 #include "port.h"
 
 typedef enum{
-    ERROR_HANDLER_NONE,
-    ERROR_HANDLER_SERIAL,
-    ERROR_HANDLER_LED,
-    ERROR_HANDLER_LED_AND_SERIAL,
-} basic_error_handler;
-
-typedef enum{
     ERROR_CODE_OBJECT_MANAGER_NOT_ENOUGH_SPACE = 10,
     ERROR_CODE_ERROR_UNDEFINED_LED = 20,
     ERROR_CODE_ERROR_ILLEGAL_LED_PORT = 21,
@@ -47,11 +40,15 @@ typedef enum{
 
 void error_handle(error_code error_code);
 
-void error_handler_configure_led(port port, uint8_t pin);
+void error_configure_handler_led(port port, uint8_t pin);
 
-void error_set_basic_handler(basic_error_handler handler);
+void error_set_handler(void (*function)(error_code));
 
-void error_set_custom_handler(void (*function)(error_code));
+void error_handler_serial(error_code error_code);
+
+void error_handler_led(error_code error_code);
+
+void error_handler_led_and_serial(error_code error_code);
 
 #if ERROR_CHECK
 #define ERROR_ASSERT(condition, error_code) ((condition) ? ((void)0) : error_handle(error_code))
